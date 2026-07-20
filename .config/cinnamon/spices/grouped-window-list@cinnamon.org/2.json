@@ -364,25 +364,25 @@
             "nemo.desktop",
             "google-chrome.desktop",
             "thunderbird.desktop",
-            "xed.desktop",
+            "org.x.editor.desktop",
             "xviewer.desktop",
             "xreader.desktop",
-            "telegram-desktop.desktop",
             "discord.desktop",
-            "rhythmbox.desktop",
-            "faugus-launcher.desktop"
+            "telegram.desktop",
+            "io.github.Faugus.faugus-launcher.desktop",
+            "org.gnome.Rhythmbox3.desktop"
         ],
         "value": [
             "nemo.desktop",
             "google-chrome.desktop",
             "thunderbird.desktop",
-            "xed.desktop",
+            "org.x.editor.desktop",
             "xviewer.desktop",
             "xreader.desktop",
-            "telegram-desktop.desktop",
             "discord.desktop",
-            "rhythmbox.desktop",
-            "faugus-launcher.desktop"
+            "telegram.desktop",
+            "io.github.Faugus.faugus-launcher.desktop",
+            "org.gnome.Rhythmbox3.desktop"
         ]
     },
     "__md5__": "3df0dfb46c743f29a6405292b645807a"
