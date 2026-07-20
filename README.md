@@ -104,8 +104,6 @@ If you find this tool helpful and it saved you some time, consider buying me a c
 
 [![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://buymeacoffee.com/bartekszczecinski)
 
-<img width="1280" height="800" alt="Screenshot_ubuntu25 10_2026-07-18_13:33:58" src="https://github.com/user-attachments/assets/351b0e2b-2980-40d1-bf8f-bf170c12f1a5" />
-
 
 ---
 
