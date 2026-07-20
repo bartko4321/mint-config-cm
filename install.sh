@@ -168,7 +168,7 @@ PACKAGES_INSTALL=(
     # Przeglądarki komunikatory
     google-chrome-stable brave-origin
     # Multimedia
-    gmic mixxx kdenlive
+    gmic mixxx kdenlive gimp
     # Narzędzia systemowe
     vim dconf-editor dconf-cli hunspell-pl bleachbit profile-sync-daemon git build-essential
     unrar-free mc btrfs-progs exfatprogs ntfs-3g os-prober

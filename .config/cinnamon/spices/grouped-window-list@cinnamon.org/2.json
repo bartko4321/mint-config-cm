@@ -362,13 +362,27 @@
         "type": "generic",
         "default": [
             "nemo.desktop",
-            "firefox.desktop",
-            "org.gnome.Terminal.desktop"
+            "google-chrome.desktop",
+            "thunderbird.desktop",
+            "xed.desktop",
+            "xviewer.desktop",
+            "xreader.desktop",
+            "telegram-desktop.desktop",
+            "discord.desktop",
+            "rhythmbox.desktop",
+            "faugus-launcher.desktop"
         ],
         "value": [
             "nemo.desktop",
-            "firefox.desktop",
-            "org.gnome.Terminal.desktop"
+            "google-chrome.desktop",
+            "thunderbird.desktop",
+            "xed.desktop",
+            "xviewer.desktop",
+            "xreader.desktop",
+            "telegram-desktop.desktop",
+            "discord.desktop",
+            "rhythmbox.desktop",
+            "faugus-launcher.desktop"
         ]
     },
     "__md5__": "3df0dfb46c743f29a6405292b645807a"
