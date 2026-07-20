@@ -454,17 +454,18 @@ if [[ -f "$SCRIPT_DIR/piwo.png" ]]; then
     log_ok "Ustawiono awatar użytkownika (AccountsService + fallback .face)"
 fi
 
-# Zmiana tapety
-log_info "Konfiguracja tapety pulpitu Cinnamon..."
+# Kopiowanie pliku tapety (samo kopiowanie robimy tutaj; USTAWIENIE tapety
+# przez gsettings wykonujemy dopiero PO wczytaniu dconf w sekcji 8 - patrz
+# niżej - bo `dconf load /` potrafi nadpisać z powrotem klucz
+# picture-uri wartością zapisaną w dconf-settings.ini i "zjeść" naszą zmianę).
+log_info "Kopiowanie tapety pulpitu Cinnamon..."
 WALLPAPER_DIR="/usr/share/backgrounds/custom"
 sudo mkdir -p "$WALLPAPER_DIR"
 
-# Pobranie ścieżki do katalogu, w którym znajduje się uruchamiany skrypt
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 SOURCE_WALLPAPER="$SCRIPT_DIR/wallpaper.jpg"
 DEST_WALLPAPER="$WALLPAPER_DIR/wallpaper.jpg"
+CHOSEN_WALLPAPER=""
 
-# Kopiowanie tapety, jeśli plik istnieje
 if [[ -f "$SOURCE_WALLPAPER" ]]; then
     sudo cp "$SOURCE_WALLPAPER" "$DEST_WALLPAPER"
     sudo chmod 644 "$DEST_WALLPAPER" # Nadanie uprawnień do odczytu dla wszystkich użytkowników
@@ -472,16 +473,6 @@ if [[ -f "$SOURCE_WALLPAPER" ]]; then
     log_info "Tapeta skopiowana do $DEST_WALLPAPER"
 else
     log_warn "Nie znaleziono pliku $SOURCE_WALLPAPER obok skryptu!"
-fi
-
-# Ustawianie tapety w środowisku graficznym
-if [[ -n "$CHOSEN_WALLPAPER" ]]; then
-    if [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
-        gsettings set org.cinnamon.desktop.background picture-uri "file://$CHOSEN_WALLPAPER" || \
-            log_warn "Nie udało się ustawić tapety przez gsettings (brak sesji graficznej?)"
-    else
-        log_warn "Brak aktywnej sesji graficznej — tapeta skopiowana, ale nie ustawiona automatycznie. Ustaw ją ręcznie po zalogowaniu."
-    fi
 fi
 
 # Zmiana tła ekranu logowania (LightDM / Slick-Greeter)
@@ -620,6 +611,23 @@ if [[ -d "$SCRIPT_DIR/.themes" ]]; then cp -af "$SCRIPT_DIR/.themes/." ~/.themes
 # Podmiana ścieżki użytkownika w plikach konfiguracyjnych
 if [[ "$OLD_USER_PLACEHOLDER" != "$CURRENT_USER" ]]; then
     find ~/.config -type f -exec sed -i "s|/home/$OLD_USER_PLACEHOLDER|/home/$CURRENT_USER|g" {} + 2>/dev/null || true
+fi
+
+# Ustawianie tapety pulpitu w środowisku graficznym (musi być PO dconf load,
+# inaczej `dconf load /` powyżej nadpisuje z powrotem stary picture-uri)
+if [[ -n "$CHOSEN_WALLPAPER" ]]; then
+    if [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
+        log_info "Ustawianie tapety pulpitu..."
+        # Cinnamon/GSettings nie zawsze wykrywa zmianę, jeśli nowy URI jest
+        # identyczny z poprzednim (np. przy ponownym uruchomieniu skryptu
+        # z tym samym plikiem wallpaper.jpg) - dlatego najpierw czyścimy klucz.
+        gsettings set org.cinnamon.desktop.background picture-uri "''" 2>/dev/null || true
+        gsettings set org.cinnamon.desktop.background picture-uri "file://$CHOSEN_WALLPAPER" || \
+            log_warn "Nie udało się ustawić tapety przez gsettings (brak sesji graficznej?)"
+        gsettings set org.cinnamon.desktop.background picture-uri-dark "file://$CHOSEN_WALLPAPER" 2>/dev/null || true
+    else
+        log_warn "Brak aktywnej sesji graficznej — tapeta skopiowana, ale nie ustawiona automatycznie. Ustaw ją ręcznie po zalogowaniu."
+    fi
 fi
 
 log_info "Zatrzymywanie sesji Cinnamon w celu przeładowania konfiguracji..."
