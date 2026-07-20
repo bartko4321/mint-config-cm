@@ -83,7 +83,7 @@ git clone https://github.com/bartko4321/mint-config-cm.git
 
 ### Step 2: Enter the downloaded folder
 ```bash
-cd mint-config-cm
+cd mint-config
 ```
 
 ### Step 3: Make the script executable
